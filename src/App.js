@@ -7,6 +7,8 @@ import { useState } from "react"
 
 
 function App() {
+
+  const [showAddTask, setShowAddTask] = useState(false)
   const [tasks, setTasks] = useState(
     [
         {
@@ -30,6 +32,14 @@ function App() {
     ]
   )
 
+
+  const addTask = (task) =>{
+    const id = Math.floor(Math.random() * 100) + 1;
+
+    const newTask = {id, ...task}
+
+    setTasks([...tasks, newTask])
+  }
   const deleteTask = (id) => {
     setTasks(tasks.filter((task) => task.id !== id))
   }
@@ -38,11 +48,15 @@ function App() {
     setTasks(tasks.map((task) => task.id === id ? { ...task, reminder: !task.reminder} : task))
   }
 
+  const toggleForm = () => {
+    setShowAddTask(!showAddTask)
+  }
+
 
   return (
     <div className="container">
-      <Header/>
-      <AddTask/>
+      <Header onToggleAdd={toggleForm}/>
+      {showAddTask && <AddTask onAdd={addTask}/>}
       {tasks.length > 0 ? <Tasks tasks={tasks} onToggle={toggleReminder} onDelete={deleteTask}/> : 'Geen taken voor vandaag'}
 
     </div>
