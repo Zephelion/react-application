@@ -55,7 +55,7 @@ function App() {
 
   return (
     <div className="container">
-      <Header onToggleAdd={toggleForm}/>
+      <Header onToggleAdd={toggleForm} showAdd={showAddTask}/>
       {showAddTask && <AddTask onAdd={addTask}/>}
       {tasks.length > 0 ? <Tasks tasks={tasks} onToggle={toggleReminder} onDelete={deleteTask}/> : 'Geen taken voor vandaag'}
 
